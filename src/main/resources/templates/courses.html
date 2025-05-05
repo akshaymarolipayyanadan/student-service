@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Courses</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+    <div th:if="${success}" class="flash-message success" th:text="${success}"></div>
+    <div th:if="${error}" class="flash-message error" th:text="${error}"></div>
+
+    <h2 style="text-align: center; margin-bottom: 30px;">Available Courses</h2>
+
+    <div class="course-grid">
+        <div th:each="course : ${courses}" class="course-card">
+            <div class="card-body">
+                <h3 th:text="${course.courseName}">Course Name</h3>
+                <p><strong>Code:</strong> <span th:text="${course.courseCode}">CODE</span></p>
+                <p><strong>Description:</strong> <span th:text="${course.courseDescription}">Description</span></p>
+                <p><strong>Fee:</strong> $<span th:text="${course.courseFee}">0.00</span></p>
+            </div>
+
+            <form th:action="@{/enroll}" method="post">
+                <input type="hidden" name="studentId" th:value="${studentId}" />
+                <input type="hidden" name="courseCode" th:value="${course.courseCode}" />
+                <button type="submit">Enroll</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        const success = document.querySelector(".flash-message.success");
+        if (success && success.textContent.includes("Enrolled successfully")) {
+            setTimeout(() => {
+                window.location.href = "/enrollments";
+            }, 1000);
+        }
+    });
+</script>
+
+</body>
+</html>

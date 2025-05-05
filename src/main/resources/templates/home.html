@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="hero-card">
+    <h1>Hello, <span th:text="${username}">Guest</span>! 👋</h1>
+
+    <p>Welcome to your personal student portal. This is your central hub for managing your learning journey.</p>
+
+    <ul>
+        <li>🎓 Browse and enroll in available courses with just one click.</li>
+        <li>🧾 View and manage your invoices — pay fees or check your history.</li>
+        <li>📋 Track your enrollments, course progress, and completion status.</li>
+        <li>📄 Check your graduation eligibility and see what’s left to complete.</li>
+        <li>🧑‍🎓 Update your student profile anytime with your latest information.</li>
+    </ul>
+
+    <p>Use the navigation menu above to explore each section.</p>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    console.log("Has Enrollments:", [[${session.hasEnrollments}]]);
+    /*]]>*/
+</script>
+
+
+
+</body>
+</html>

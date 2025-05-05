@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Invoices</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+    <h2 style="text-align: center; margin-bottom: 30px;">My Invoices</h2>
+
+    <div th:if="${success}" class="flash-message success" th:text="${success}"></div>
+    <div th:if="${error}" class="flash-message error" th:text="${error}"></div>
+
+    <table class="enrollment-table">
+        <thead>
+        <tr>
+            <th>Reference</th>
+            <th>Amount</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="invoice : ${invoices}">
+            <td th:text="${invoice.reference}">REF123</td>
+            <td>$<span th:text="${invoice.amount}">0.00</span></td>
+            <td th:text="${invoice.dueDate}">2025-05-16</td>
+            <td th:text="${invoice.status}">PAID</td>
+            <td th:text="${invoice.type}">TUITION_FEES</td>
+            <td>
+                <form th:action="@{/invoices/pay}" method="post" th:if="${invoice.status == 'OUTSTANDING'}">
+                    <input type="hidden" name="reference" th:value="${invoice.reference}" />
+                    <button type="submit">Pay</button>
+                </form>
+                <span th:if="${invoice.status != 'OUTSTANDING'}">—</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

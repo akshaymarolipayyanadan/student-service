@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Graduation Status</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container">
+    <h2 style="text-align: center; margin-bottom: 30px;">Graduation Status</h2>
+
+    <div class="graduation-section">
+        <p><strong>Graduation Eligible:</strong>
+            <span th:text="${#lists.isEmpty(graduationStatus.pendingCourses) and !graduationStatus.hasOutstandingInvoices} ? '✅ Yes' : '❌ No'"></span>
+        </p>
+    </div>
+
+    <div class="graduation-section">
+        <h3>✅ Completed Courses</h3>
+        <ul>
+            <li th:each="course : ${graduationStatus.completedCourses}" th:text="${course}">Course</li>
+        </ul>
+    </div>
+
+    <div class="graduation-section">
+        <h3>❌ Pending Courses</h3>
+        <ul>
+            <li th:each="course : ${graduationStatus.pendingCourses}" th:text="${course}">Course</li>
+        </ul>
+    </div>
+
+    <div class="graduation-section">
+        <h3>💰 Outstanding Invoices</h3>
+        <p th:if="${graduationStatus.hasOutstandingInvoices}">
+            There are outstanding invoices. Visit <a th:href="@{/invoices}">Invoice</a>.
+        </p>
+        <p th:unless="${graduationStatus.hasOutstandingInvoices}">
+            No outstanding invoices.
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
